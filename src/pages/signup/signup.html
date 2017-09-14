@@ -1,0 +1,38 @@
+
+<ion-header>
+  <custom-logged-header [title]="view">  </custom-logged-header>
+</ion-header>
+
+
+<ion-content padding>
+  <h1 text-center>
+    <ion-icon class="auth-icon" name="person-add" color="primary"></ion-icon>
+  </h1>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit(); $event.preventDefault()">
+    <ion-item>
+      <ion-icon name="person" item-left color="primary"></ion-icon>
+      <ion-input type="text" placeholder="Nome" formControlName="name"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-icon name="at" item-left color="primary"></ion-icon>
+      <ion-input type="text" placeholder="Usuário" formControlName="username"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon name="mail" item-left color="primary"></ion-icon>
+      <ion-input type="text" placeholder="E-mail" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="lock" item-left color="primary"></ion-icon>
+      <ion-input type="password" placeholder="Senha" formControlName="password"></ion-input>
+    </ion-item>
+
+    <br>
+
+    <button ion-button block type="submit" [disabled]="signupForm.invalid">Criar Conta</button>
+    
+  </form>
+</ion-content>

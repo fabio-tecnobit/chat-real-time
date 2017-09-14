@@ -1,0 +1,41 @@
+<!--
+  Generated template for the SigninPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Entrar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1 text-center>
+    <ion-icon class="auth-icon" name="chatboxes" color="primary"></ion-icon>
+  </h1>
+  <form [formGroup]="signinForm" (ngSubmit)="onSubmit(); $event.preventDefault()">
+   
+    <ion-item>
+      <ion-icon name="mail" item-left color="primary"></ion-icon>
+      <ion-input type="text" placeholder="E-mail" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="lock" item-left color="primary"></ion-icon>
+      <ion-input type="password" placeholder="Senha" formControlName="password"></ion-input>
+    </ion-item>
+
+    <br>
+
+    <button ion-button block type="submit" [disabled]="signinForm.invalid">Entrar</button>
+    
+  </form>
+  <button ion-button block clear text-center (click)="onSignup()">Criar Conta</button>
+
+  <button ion-button block (click)="onHomePage()">HomePage</button>
+  <button ion-button block (click)="onLogout()">Logout</button>
+</ion-content>
