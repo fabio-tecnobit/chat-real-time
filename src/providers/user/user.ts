@@ -1,9 +1,10 @@
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import { User } from './../../models/user';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 import * as firebase from 'firebase/app';
 import { BaseProvider } from "../base/base";
@@ -14,28 +15,38 @@ import { BaseProvider } from "../base/base";
 export class UserProvider extends BaseProvider {
 
   users: FirebaseListObservable<User[]>;
+  currentUser: FirebaseObjectObservable<User>;
   constructor(public db: AngularFireDatabase,
+              private firebaseAuth: AngularFireAuth,
     public http: Http) {
     super();
     console.log('Hello UserProvider Provider');
-    this.users = this.db.list(`/users`);
+    //this.users = this.db.list(`/users`);
+    this.listenAuthState();
     console.log(this.users);
   }
-  //create(user:User):firebase.Promise<void>{
-  //create(user:User,fcallback:Function):void{
 
+  private setUsers(uidToExclude:string){
+    this.users = <FirebaseListObservable<User[]>> this.db.list(`/users`,{
+      query:{
+        orderByChild:'name'
+      }
+    }).map((users:User[])=>{
+      console.log('***usuarios',users);
+      return users.filter((user:User)=>user.$key !== uidToExclude);
+    });
 
-  /*this.users.push(user)
-  .then(_ => {
-    console.log('success');
-    fcallback();
-  })
-  .catch(err => console.log(err, 'You do not have access!'));
-  */
-  /* create(user:User):firebase.Promise<any>{
-       return this.users.push(user);      
-   }
- */
+  }
+  private listenAuthState():void{
+    this.firebaseAuth.authState
+    .subscribe((authState)=>{
+      if (authState){
+        this.currentUser = this.db.object(`/users/${authState.uid}`);
+        
+        this.setUsers(authState.uid);
+      }
+    });
+  }
   create(user: User, uuid:string): firebase.Promise<any> {
     //return this.users.push(user);      
     return this.db.object(`/users/${uuid}`)
@@ -51,5 +62,10 @@ export class UserProvider extends BaseProvider {
     }).map((users:User[])=>{
       return users.length>0;
     }).catch(this.handleObservableError);
+  }
+
+  get(userId:string):FirebaseListObservable<User>{
+    return <FirebaseListObservable<User>>this.db.object(`/users/${userId}`)
+    .catch(this.handleObservableError);
   }
 }

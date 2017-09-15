@@ -13,6 +13,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
 import { HttpModule } from '@angular/http';
 import { AuthProvider } from '../providers/auth/auth';
+import { ChatProvider } from '../providers/chat/chat';
+import { MessageProvider } from '../providers/message/message';
 //import { BaseProvider } from '../providers/base/base';
 
 
@@ -50,7 +52,9 @@ const firebaseAppConfig: FirebaseAppConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
     UserProvider,
     AuthProvider,
-    AngularFireAuth//,
+    AngularFireAuth,
+    ChatProvider,
+    MessageProvider//,
     //BaseProvider   
   ]
 })

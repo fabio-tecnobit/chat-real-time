@@ -15,13 +15,6 @@ import * as firebase from 'firebase/app';
 import { BaseProvider } from "../base/base";
 
 
-
-/*
-  Generated class for the AuthProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
   
 @Injectable()
 export class AuthProvider extends BaseProvider{
