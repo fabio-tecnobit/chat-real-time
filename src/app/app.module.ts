@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../components/components.module';
 //import { SigninPage } from './../pages/signin/signin';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserProvider } from './../providers/user/user';
@@ -38,7 +39,8 @@ const firebaseAppConfig: FirebaseAppConfig = {
     HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseAppConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

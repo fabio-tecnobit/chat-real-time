@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
-import { User } from './../../models/user';
+//import { User } from './../../models/user';
 import { AuthProvider } from './../../providers/auth/auth';
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
@@ -8,8 +8,8 @@ import { IonicPage, NavController, NavParams, Loading, LoadingController, AlertC
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+//import { AngularFireModule } from 'angularfire2';
+//import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 //import * as firebase from 'firebase/app';
 
 @IonicPage()

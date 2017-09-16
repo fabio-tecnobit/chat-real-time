@@ -5,7 +5,7 @@ import { User } from './../../models/user';
 import { Chat } from './../../models/chat';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { Component } from '@angular/core';
-import { IonicPage,NavController } from 'ionic-angular';
+import { IonicPage, NavController, MenuController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 
@@ -22,7 +22,8 @@ export class HomePage {
               public UserProvider:UserProvider,
               public authProvider: AuthProvider,
               public chatProvider:ChatProvider,
-              public db:AngularFireDatabase) {
+              public db:AngularFireDatabase,
+              public menuCtrl: MenuController) {
 
   }
 
@@ -43,7 +44,7 @@ export class HomePage {
           
           let chat1 = new Chat('',timestamp,recipientUser.name,'');
           this.chatProvider.create(chat1,currentUser.$key,recipientUser.$key);
-          let chat2 = new Chat('',timestamp,recipientUser.name,'');
+          let chat2 = new Chat('',timestamp,currentUser.name,'');
           this.chatProvider.create(chat2,recipientUser.$key,currentUser.$key);
 
         }
@@ -60,6 +61,7 @@ export class HomePage {
     
     this.users = this.UserProvider.users;
     this.chats = this.chatProvider.chats;
+    this.menuCtrl.enable(true,'user-menu');
     
     
   }
@@ -76,6 +78,33 @@ export class HomePage {
   }
   ionViewCanEnter():Promise<boolean>{
     return this.authProvider.autenticated;
+  }
+  filterItems(event:any):void{
+    console.log('filter');
+    let searchTerm:string = event.target.value;
+
+    this.users = this.UserProvider.users;
+    this.chats = this.chatProvider.chats;
+    if (searchTerm){
+      console.log(searchTerm);
+      switch(this.view){
+        case 'chats':
+        this.chats = <FirebaseListObservable<Chat[]>> this.chats.map((chats: Chat[])=>{
+            return chats.filter((chat: Chat)=>{
+              return chat.title.toLowerCase().indexOf(searchTerm.toLowerCase())>-1;
+            })
+          });
+          break;
+        case 'users':
+        this.users = <FirebaseListObservable<User[]>> this.users.map((users: User[])=>{
+          return users.filter((user: User)=>{
+            return user.name.toLowerCase().indexOf(searchTerm.toLowerCase())>-1;
+          })
+        });
+          break;
+
+      }
+    }
   }
   
 }

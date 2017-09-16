@@ -1,12 +1,14 @@
-import { OnInit } from '@angular/core';
+import { OnInit, ViewChild } from '@angular/core';
 import { AuthProvider } from './../../providers/auth/auth';
-import { NavController, AlertController, MenuController, App } from 'ionic-angular';
+import { App, AlertController, MenuController, NavController,Nav } from 'ionic-angular';
+import { Component, Input } from '@angular/core';
 //import { Component } from '@angular/core';
 
 //@Component({})
 export abstract class BaseComponent implements OnInit {
 
   protected navCtrl:NavController;
+  //@ViewChild(Nav) nav: Nav;
 
   constructor(public alertCtrl: AlertController,
               public authProvider: AuthProvider,
@@ -15,7 +17,7 @@ export abstract class BaseComponent implements OnInit {
     
   }
   ngOnInit():void{
-    this.navCtrl = this.app.getActiveNav();
+    //this.navCtrl = this.app.getActiveNavs()[0];
   }
   onLogout():void{
     console.log('on Logout');
@@ -27,6 +29,7 @@ export abstract class BaseComponent implements OnInit {
           this.authProvider.logout()
           .then(()=>{
             this.navCtrl.setRoot('SigninPage');
+            this.menuCtrl.enable(false,'user-menu');
           });
         }
       },{
@@ -34,5 +37,7 @@ export abstract class BaseComponent implements OnInit {
       }]
     }).present();
   }
-
+  onProfile():void{
+    this.navCtrl.push('UserProfilePage');
+  }
 }

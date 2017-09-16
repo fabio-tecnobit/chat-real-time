@@ -11,6 +11,11 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>  
+
+  <ion-toolbar>
+    <ion-searchbar placeholder="Buscar" (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-toolbar>
+
 </ion-header>
 
 <ion-content padding>
