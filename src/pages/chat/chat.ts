@@ -100,17 +100,12 @@ export class ChatPage {
         });
     }
   }
-  private scrollToBottom(duration?: number): void {
+ scrollToBottom(duration?: number): void {
     setTimeout(() => {
-      if (this.content) {
-         //if (this.content.scrollToBottom){
-            this.content.scrollToBottom(duration || 300);
-         //}
-      }
+      if (this.content && this.content.scrollToBottom && this.content._scroll) {
+       this.content.scrollToBottom(duration || 300);
+     }
     }, 50);
-
-
-
-  }
+}
 
 }

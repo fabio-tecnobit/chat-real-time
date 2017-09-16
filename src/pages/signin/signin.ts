@@ -19,7 +19,10 @@ export class SigninPage {
               public loadingCtrl: LoadingController,
               public alertCtrl: AlertController
             ) {
-  
+              if (this.authProvider.autenticated){
+                this.navCtrl.setRoot('HomePage');
+              }
+              
                 let emailRegex= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 this.signinForm = this.formBuilder.group({
                   email: ['',Validators.compose([Validators.required, Validators.pattern(emailRegex)])],
@@ -45,9 +48,8 @@ export class SigninPage {
   onSignup():void{
     this.navCtrl.push('SignupPage');
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SigninPage');
-  }
+  
+  
   private showLoading():Loading{
     let loading:Loading = this.loadingCtrl.create({
       content:'Por favor aguarde...'
